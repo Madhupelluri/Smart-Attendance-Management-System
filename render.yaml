@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: smart-attendance-backend
+    root: backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        scope: project
+      - key: JWT_SECRET
+        scope: project
+      - key: PORT
+        value: 10000
