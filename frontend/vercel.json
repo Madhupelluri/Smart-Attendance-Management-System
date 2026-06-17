@@ -2,8 +2,5 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "regions": ["iad1"],
-  "env": {
-    "VITE_API_URL": "@smart_attendance_backend_url"
-  }
+  "regions": ["iad1"]
 }
