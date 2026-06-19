@@ -124,9 +124,11 @@ export default function AdminReports() {
                         <td className="px-4 py-2.5">
                           <div className="flex items-center gap-2">
                             <div className="w-16 bg-slate-100 rounded-full h-1.5">
-                              <div className={`h-1.5 rounded-full ${parseFloat(r.rate) >= 75 ? 'bg-green-500' : 'bg-red-500'}`} style={{ width: `${Math.min(r.rate, 100)}%` }} />
+                              <div className={`h-1.5 rounded-full ${r.rate !== 'N/A' && parseFloat(r.rate) >= 75 ? 'bg-green-500' : 'bg-red-500'}`} style={{ width: `${r.rate !== 'N/A' ? Math.min(parseFloat(r.rate), 100) : 0}%` }} />
                             </div>
-                            <span className={`font-semibold text-xs ${parseFloat(r.rate) < 75 ? 'text-red-600' : 'text-green-600'}`}>{r.rate}%</span>
+                            <span className={`font-semibold text-xs ${r.rate !== 'N/A' && parseFloat(r.rate) < 75 ? 'text-red-600' : 'text-green-600'}`}>
+                              {r.rate}{r.rate !== 'N/A' ? '%' : ''}
+                            </span>
                           </div>
                         </td>
                       </tr>

@@ -28,7 +28,7 @@ export default function MarkAttendance() {
     setLoading(true);
     setLoaded(false);
     try {
-      const res = await api.get('/attendance/today', { params: { class: selectedClass, section: selectedSection } });
+      const res = await api.get('/attendance/today', { params: { class: selectedClass, section: selectedSection, date } });
       const list = res.data.data.map((d) => ({
         student: d.student,
         status: d.attendance ? d.attendance.status : 'Present',

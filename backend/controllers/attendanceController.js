@@ -131,14 +131,14 @@ const getStudentAttendance = async (req, res, next) => {
 // @access  Teacher, Admin
 const getTodayAttendance = async (req, res, next) => {
   try {
-    const { class: className, section } = req.query;
+    const { class: className, section, date } = req.query;
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    const targetDate = date ? new Date(date) : new Date();
+    targetDate.setHours(0, 0, 0, 0);
+    const nextDay = new Date(targetDate);
+    nextDay.setDate(nextDay.getDate() + 1);
 
-    const filter = { date: { $gte: today, $lt: tomorrow } };
+    const filter = { date: { $gte: targetDate, $lt: nextDay } };
     if (className) filter.class = className;
     if (section) filter.section = section;
 

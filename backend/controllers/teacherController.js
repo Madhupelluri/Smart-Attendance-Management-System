@@ -71,8 +71,7 @@ const updateTeacher = async (req, res, next) => {
     if (typeof isActive !== 'undefined') teacher.isActive = isActive;
 
     if (password) {
-      const salt = await bcrypt.genSalt(10);
-      teacher.password = await bcrypt.hash(password, salt);
+      teacher.password = password;
     }
 
     await teacher.save();

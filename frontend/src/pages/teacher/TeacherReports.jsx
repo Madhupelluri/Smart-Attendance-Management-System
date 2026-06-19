@@ -79,38 +79,43 @@ export default function TeacherReports() {
         </div>
       ) : (
         <div className="space-y-4">
-          {reports.map((item) => (
-            <div key={`${item.class}-${item.section}`} className="card p-4">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                  <h2 className="text-lg font-semibold text-slate-800">Class {item.class} - Section {item.section}</h2>
-                  <p className="text-sm text-slate-500">Working days: {item.workingDays} · Students: {item.totalStudents}</p>
+          {reports.map((item) => {
+            const rates = item.report.map((s) => parseFloat(s.rate)).filter((r) => !isNaN(r));
+            const avgRate = rates.length ? `${Math.round(rates.reduce((sum, val) => sum + val, 0) / rates.length)}%` : 'N/A';
+
+            return (
+              <div key={`${item.class}-${item.section}`} className="card p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-800">Class {item.class} - Section {item.section}</h2>
+                    <p className="text-sm text-slate-500">Working days: {item.workingDays} · Students: {item.totalStudents}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-slate-500">Last refreshed</p>
+                    <p className="text-xl font-semibold text-primary-700">Live</p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm text-slate-500">Last refreshed</p>
-                  <p className="text-xl font-semibold text-primary-700">Live</p>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-xs uppercase text-slate-400">Working days</p>
+                    <p className="text-2xl font-semibold text-slate-800">{item.workingDays}</p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-xs uppercase text-slate-400">Students</p>
+                    <p className="text-2xl font-semibold text-slate-800">{item.totalStudents}</p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-xs uppercase text-slate-400">Attendance rate</p>
+                    <p className="text-2xl font-semibold text-primary-700">{avgRate}</p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-xs uppercase text-slate-400">Average per student</p>
+                    <p className="text-2xl font-semibold text-slate-800">{avgRate}</p>
+                  </div>
                 </div>
               </div>
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-3">
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase text-slate-400">Working days</p>
-                  <p className="text-2xl font-semibold text-slate-800">{item.workingDays}</p>
-                </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase text-slate-400">Students</p>
-                  <p className="text-2xl font-semibold text-slate-800">{item.totalStudents}</p>
-                </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase text-slate-400">Attendance rate</p>
-                  <p className="text-2xl font-semibold text-primary-700">{item.report.length ? `${Math.round((item.report.reduce((sum, s) => sum + parseFloat(s.rate || 0), 0) / item.report.length) || 0)}%` : 'N/A'}</p>
-                </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="text-xs uppercase text-slate-400">Average per student</p>
-                  <p className="text-2xl font-semibold text-slate-800">{item.report.length ? `${Math.round(item.report.reduce((sum, s) => sum + parseFloat(s.rate || 0), 0) / item.report.length)}%` : 'N/A'}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
